@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+override_dh_auto_install:
+	env PREFIX=/usr dh_auto_install
+
+override_dh_auto_test:
+	env LANG=C.UTF-8 dh_auto_test
+
+%:
+	dh $@ -D src
+
+override_dh_installchangelogs:
+	:
+
+override_dh_installdocs:
+	:

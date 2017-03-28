@@ -1,0 +1,58 @@
+kakoune-debian
+--------------
+
+This repository contains the files necessary to build a Debian package
+for the https://github.com/mawww/kakoune/[kakoune] project.
+
+The point is not to provide a proper package that follows all the Debian
+guidelines regarding package creation, but rather to allow users to
+quickly deploy the editor on Debian systems with a dummy package.
+
+As such, the changelog will not be updated, and the package metadata
+(descriptions, versions etc) will be kept at a minimum so as to not
+duplicate the work done by actual package maintainers.
+
+How to generate a `deb` package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The package has to be generated in a Debian environment (using e.g.
+`docker`), and the following package has to be installed, additionally to
+the build dependencies of the project itself:
+
+```
+debhelper
+```
+
+Get the source code of the project, and extract it:
+
+```
+$ wget -O kakoune-1.0_1.0.orig.tar.gz https://github.com/mawww/kakoune/archive/master.tar.gz
+$ tar xf kakoune-1.0_1.0.orig.tar.gz
+```
+
+Clone this repository in the `kakoune` code directory:
+
+```
+$ cd kakoune-master
+$ git clone https://github.com/lenormf/kakoune-debian debian
+```
+
+Generate a package, and optionally install it:
+
+```
+$ dpkg-buildpackage -us -uc
+# dpkg -i ../kakoune-1.0*.deb
+```
+
+How the debian files were generated
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to come up with the files versioned in this repository, the
+following command was used from within the upstream code directory:
+
+```
+dh_make -y -s -p kakoune-1.0 --createorig -e e@ma.il -c custom --copyrightfile ../UNLICENSE
+```
+
+After that, the files in the newly created `debian` directory were
+modified, trimmed up and tweaked.

@@ -1,0 +1,2 @@
+?package(kakoune):needs="text" section="Applications/Editors"\
+  title="kakoune" command="/usr/bin/kak"
